@@ -1,0 +1,35 @@
+Ip Configuration to vlans to ensure connections are successful or not
+
+
+For subnet1 (VLAN 100) valid IP addresses 
+from 192.168.100.1 to 192.168.100.62 
+
+to give IP
+
+1. Click on pc
+2.Go to desktop tab
+3.Click on IP configuration
+4. Assign IP address staticly
+
+subnet 2 (VLAN 200)
+from 192.168.100.65  t0 192.168.100.126 
+
+subnet 3 (VLAN 300)
+from 192.168.100.129 to 192.168.100.190 
+
+
+subnet 4 (VLAN 400)
+from 192.168.100.191 to 192.168.100.254 
+
+Now we can ensure communucation within each
+ VLAN successfully done or not.
+forthat
+
+1. click on one pc considering as source
+2. go to desktop tab.
+3. click on cmd
+4. Type  PING IP_OF_RECEIVER
+
+ONLY COMMUNICATE WITHIN PARTICULAR LAN
+
+ 

@@ -1,0 +1,33 @@
+Creating VLAN
+1. create LAN using switch
+and devices 
+2. In this LAN upto question there are 4 VLANs
+3. CONFIGURE SWITCH
+ go to switch 
+Type SHOW VLAN BRIEF to display connections
+
+4. Assin ports for vlan
+    choose cable and connect devices to switch.
+
+to assign port 
+1.  Give name for VLAN 
+ Type VLAN ID(use in dividance)
+Type NAME VLAN name for give name. 
+
+2. assign ports there are two ways
+i. if have range of ports such as 1 to 5
+Type INTERFACE RANGE FA 0/1-5
+
+ii. Otherwise give one by one port 
+Type INTERFACE FA0/1
+
+AFTER use 
+SWITCHPOR MODE ACCESS 
+SWITCHPORT ACCESS vlanID
+to push assign ports.
+
+finally we can use PING command on devices after
+ configuring IP addresses which are we get from
+ calculations
+
+ 

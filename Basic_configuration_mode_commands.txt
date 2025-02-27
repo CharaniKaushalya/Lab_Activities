@@ -1,0 +1,21 @@
+Select Device
+Click on it
+Go to CLI mode
+.............................
+Now you are in SETUP MODE
+Enter NO
+Press ENTER KEY
+............................................
+Now you are in USER MODE(>)
+Enter EN / ENABLE to go next mode
+ ......................................
+Now you are in PRIVILEGE MODE (#)
+Enter CONFIG T / CONFIGURATION TERMINAL to go next mode
+.........................................
+Now you are in GLOBAL CONFIGURATION MODE (config)#
+Enter INTERFACE GIG0/0 to enter specific port to change it.
+..........................................
+Now you are in INTERFACE MODE (config-if)#
+
+EXIT command for previous mode
+END for very first mode

@@ -1,0 +1,38 @@
+Basic configurations for boh router and switch
+
+Assign name 
+1. click on device 
+2. go to CLI mode
+3. Go to global configuration mode
+4. Type HOSTNAME name
+It will change name
+ ................................
+
+Assign Password
+1.Type ENABLE PASSWORD Password
+
+To ensure can use command
+SHOW RUNNING-CONFIG
+and
+Can go to first mode again enable global mode hen i will require name and passwod
+
+.............................
+
+Create Secret password
+1. Type ENABLE SECRET password (It is hashed one)
+...................................
+
+To remove one assignment can use NO keyword from begining of command
+
+
+Create users on device
+1.Type USERNAME name PASSWORD password
+..........................
+
+verify users need to create console connectivity
+1. Type line con 0
+2. Type login local
+3. Type device password
+
+Then it will direct you to authentication
+ 
