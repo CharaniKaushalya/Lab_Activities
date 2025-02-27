@@ -15,6 +15,10 @@ Here are the activities included in this repository:
 6. **Lab 6: ACL Configuration** - Access Control Lists (ACLs) for traffic filtering.
 7. **Lab 7: Wireless Network Configuration** - Configuring wireless routers and access points.
 
+![simple lan](https://github.com/user-attachments/assets/1ac110bf-6fcd-4d59-931c-c85e804e67df)![vlan](https://github.com/user-attachments/assets/a5ce71be-d576-47cb-9213-38662a6bce45)
+
+
+
 Each lab folder contains the following:
 - Cisco Packet Tracer file (`.pkt`)
 - Configuration files (if applicable)
