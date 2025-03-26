@@ -1,0 +1,29 @@
+Trunking
+
+Typically  trunking helps to communicate with two switch.
+It means assume one bulding have 3 floors. In each floor have IT and HR departments. 
+To communicate with each floor HR departments or IT to IT departments can use concept TRUNKING.
+
+Configurations.
+1)create vlans on each switch
+	i) vlan <id>
+	ii) name <vlan name>
+	
+2) Assign ports
+	i) interface <port id>
+	ii) switchport mode access
+	iii) switchport access <vlan id>
+	
+3) craete ports which are connected 2 switches as Trunking
+	Create vlan called NATIVE for trunking.
+		i) vlan <id>
+		ii) name <set name as NATIVE>
+		iii) interface <port connects switch>
+		iv) switchport mode <mode is trunk>
+		v) switchport mode trunk vlan <native vlan id>
+		
+4) To verify
+	To see VLAN assignments:
+		i) show vlan brief
+	To see trunk details:
+		i) show interfaces trunk

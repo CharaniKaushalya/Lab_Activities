@@ -1,0 +1,187 @@
+r1
+
+Router>en
+Router#
+Router#
+Router#conf t
+Router(config)#hostname RTR-VV
+RTR-VV(config)#
+**************************************************************************************************************************
+port up mannually and giving ip for each router
+**************************************************************************************************************************
+RTR-VV(config)#int gig0/0	
+RTR-VV(config-if)#no shut
+RTR-VV(config-if)#ip address 202.168.1.254 255.255.255.0
+RTR-VV(config-if)#
+RTR-VV(config-if)#
+RTR-VV(config-if)#int gig0/1
+RTR-VV(config-if)#no shut
+RTR-VV(config-if)#ip address 172.16.12.1 255.255.255.252
+RTR-VV(config-if)#
+RTR-VV(config-if)#
+RTR-VV(config-if)#
+RTR-VV(config-if)#int gig0/2
+RTR-VV(config-if)#no shut
+RTR-VV(config-if)#ip address 172.16.13.1 255.255.255.252
+RTR-VV(config-if)#
+RTR-VV(config-if)#
+RTR-VV(config-if)#
+RTR-VV(config-if)#do sh ip int br
+Interface              IP-Address      OK? Method Status                Protocol 
+GigabitEthernet0/0     202.168.1.254   YES manual up                    up 
+GigabitEthernet0/1     172.16.12.1     YES manual up                    down 
+GigabitEthernet0/2     172.16.13.1     YES manual up                    down 
+Vlan1                  unassigned      YES unset  administratively down down
+RTR-VV(config-if)#
+RTR-VV(config-if)#
+RTR-VV(config-if)#
+RTR-VV(config-if)#do wr
+Building configuration...
+[OK]
+RTR-VV(config-if)#
+RTR-VV(config-if)#
+RTR-VV#
+RTR-VV#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+RTR-VV(config)#
+**************************************************************************************************************************
+Configure dynamic routing using OSPF protocol - Multiple area
+**************************************************************************************************************************
+RTR-VV(config)#router ospf 1
+RTR-VV(config-router)#router-id 1.1.1.1
+RTR-VV(config-router)#
+RTR-VV(config-router)#network 202.168.1.254 0.0.0.255 area 10
+RTR-VV(config-router)#no network 202.168.1.254 0.0.0.255 area 10
+RTR-VV(config-router)#
+RTR-VV(config-router)#
+RTR-VV(config-router)#network 202.168.1.0 0.0.0.255 area 10
+RTR-VV(config-router)#
+RTR-VV(config-router)#network 172.16.12.0 0.0.0.3 area 0
+RTR-VV(config-router)#
+RTR-VV(config-router)#network 172.16.13.0 0.0.0.3 area 0
+RTR-VV(config-router)#
+RTR-VV(config-router)#
+
+
+
+r2
+Router>
+Router>
+Router>en
+Router#
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#
+Router(config)#hostname RTR-CMB
+RTR-CMB(config)#
+**************************************************************************************************************************
+port up mannually and giving ip for each router
+**************************************************************************************************************************
+RTR-CMB(config)#int gig0/0
+RTR-CMB(config-if)#no shut
+RTR-CMB(config-if)#ip address 202.168.2.254 255.255.255.0
+RTR-CMB(config-if)#
+RTR-CMB(config-if)#
+RTR-CMB(config-if)#int gig0/1
+RTR-CMB(config-if)#no shut
+RTR-CMB(config-if)#ip address 172.16.12.2 255.255.255.252
+RTR-CMB(config-if)#
+RTR-CMB(config-if)#int gig0/2
+RTR-CMB(config-if)#no shut
+RTR-CMB(config-if)#ip address 172.16.23.2 255.255.255.252
+RTR-CMB(config-if)#
+RTR-CMB(config-if)#
+RTR-CMB(config-if)#
+RTR-CMB(config-if)#do sh ip int br
+Interface              IP-Address      OK? Method Status                Protocol 
+GigabitEthernet0/0     202.168.2.254   YES manual up                    up 
+GigabitEthernet0/1     172.16.12.2     YES manual up                    up 
+GigabitEthernet0/2     172.16.23.2     YES manual up                    down 
+Vlan1                  unassigned      YES unset  administratively down down
+RTR-CMB(config-if)#
+RTR-CMB(config-if)#
+
+RTR-CMB>en
+RTR-CMB#
+RTR-CMB#
+RTR-CMB#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+RTR-CMB(config)#
+**************************************************************************************************************************
+Configure dynamic routing using OSPF protocol - Multiple area
+**************************************************************************************************************************
+RTR-CMB(config)#
+RTR-CMB(config)#router ospf 1
+RTR-CMB(config-router)#router-id 2.2.2.2
+RTR-CMB(config-router)#
+RTR-CMB(config-router)#network 202.168.2.0 0.0.0.255 area 10
+RTR-CMB(config-router)#no network 202.168.1.0 0.0.0.255 area 10
+RTR-CMB(config-router)#
+RTR-CMB(config-router)#
+RTR-CMB(config-router)#network 202.168.2.0 0.0.0.255 area 20
+RTR-CMB(config-router)#network 172.16.12.0 0.0.0.3 area 0
+RTR-CMB(config-router)#network 172.16.23.0 0.0.0.3 area 0
+RTR-CMB(config-router)#
+RTR-CMB(config-router)#
+
+r3
+
+Router>
+Router>
+Router>en
+Router#
+Router#
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#
+Router(config)#
+Router(config)#hostname RTR-DR
+RTR-DR(config)#
+**************************************************************************************************************************
+port up mannually and giving ip for each router
+**************************************************************************************************************************
+RTR-DR(config)#int gig0/0
+RTR-DR(config-if)#no shut
+RTR-DR(config-if)#ip address 202.168.3.254 255.255.255.0
+RTR-DR(config-if)#
+RTR-DR(config-if)#
+RTR-DR(config-if)#int gig0/1
+RTR-DR(config-if)#no shut
+RTR-DR(config-if)#ip address 172.16.23.1 255.255.255.252
+RTR-DR(config-if)#
+RTR-DR(config-if)#
+RTR-DR(config-if)#int gig0/2
+RTR-DR(config-if)#no shut
+RTR-DR(config-if)#ip address 172.16.13.2 255.255.255.252
+RTR-DR(config-if)#
+RTR-DR(config-if)#
+RTR-DR(config-if)#
+RTR-DR(config-if)#do sh ip int br
+Interface              IP-Address      OK? Method Status                Protocol 
+GigabitEthernet0/0     202.168.3.254   YES manual up                    up 
+GigabitEthernet0/1     172.16.23.1     YES manual up                    up 
+GigabitEthernet0/2     172.16.13.2     YES manual up                    up 
+Vlan1                  unassigned      YES unset  administratively down down
+RTR-DR(config-if)#
+RTR-DR(config-if)#
+
+RTR-DR>
+RTR-DR>
+RTR-DR>en
+RTR-DR#
+RTR-DR#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+RTR-DR(config)#
+
+**************************************************************************************************************************
+Configure dynamic routing using OSPF protocol - Multiple area
+**************************************************************************************************************************
+RTR-DR(config)#
+RTR-DR(config)#router ospf 1
+RTR-DR(config-router)#router-id 3.3.3.3
+RTR-DR(config-router)#
+RTR-DR(config-router)#network 202.168.3.0 0.0.0.255 area 30
+RTR-DR(config-router)#network 172.16.13.0 0.0.0.3 area 0
+RTR-DR(config-router)#network 172.16.23.0 0.0.0.3 area 0
+RTR-DR(config-router)#
+RTR-DR(config-router)#

@@ -1,0 +1,424 @@
+sw 1
+
+
+sw-core>
+sw-core>en
+sw-core#
+sw-core#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+sw-core(config)#
+**************************************************************************************************************************
+Creating VLANS and assigning ports
+**************************************************************************************************************************
+sw-core(config)#vlan 10
+sw-core(config-vlan)#name dev
+sw-core(config-vlan)#
+sw-core(config-vlan)#vlan 20
+sw-core(config-vlan)#name qa
+sw-core(config-vlan)#
+sw-core(config-vlan)#vlan 30
+sw-core(config-vlan)#name it
+sw-core(config-vlan)#
+sw-core(config-vlan)#vlan 40
+sw-core(config-vlan)#name hr
+sw-core(config-vlan)#
+sw-core(config-vlan)#
+sw-core(config-vlan)#ex
+sw-core(config)#do sh vlan br
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/1, Fa0/2, Fa0/3, Fa0/4
+                                                Fa0/5, Fa0/6, Fa0/7, Fa0/8
+                                                Fa0/9, Fa0/10, Fa0/11, Fa0/12
+                                                Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                Fa0/17, Fa0/18, Fa0/19, Fa0/20
+                                                Gig0/2
+10   dev                              active    
+20   qa                               active    
+30   it                               active    
+40   hr                               active    
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+sw-core(config)#
+sw-core(config)#
+**************************************************************************************************************************
+Make link between switch - to - router as trunk
+**************************************************************************************************************************
+sw-core(config)#
+sw-core(config)#int gig0/1
+sw-core(config-if)#switchport mode tr
+sw-core(config-if)#switchport tr native vlan 99
+sw-core(config-if)#
+sw-core(config-if)#do sh int tr
+Port        Mode         Encapsulation  Status        Native vlan
+Po2         on           802.1q         trunking      99
+Po3         on           802.1q         trunking      99
+Gig0/1      on           802.1q         trunking      99
+
+Port        Vlans allowed on trunk
+Po2         1-1005
+Po3         1-1005
+Gig0/1      1-1005
+
+Port        Vlans allowed and active in management domain
+Po2         1,10,20,30,40
+Po3         1,10,20,30,40
+Gig0/1      1,10,20,30,40
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Po2         1,10,20,40
+Po3         10,30
+Gig0/1      1,10,20,30,40
+
+**************************************************************************************************************************
+Configure PVST for each vlan here 10 is root
+**************************************************************************************************************************
+sw-core (config-if-range)#
+sw-gf(config-if-range)#spanning-tree mode pvst
+sw-gf(config)#spanning-tree vlan 10 root primary
+sw-gf(config)#
+sw-gf(config)#
+
+
+sw 2
+	
+sw-gf>
+sw-gf>
+sw-gf>en
+sw-gf#
+sw-gf#
+sw-gf#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+sw-gf(config)#
+**************************************************************************************************************************
+Creating vlans and assigning ports
+**************************************************************************************************************************
+sw-gf(config)#
+sw-gf(config)#vlan 10
+sw-gf(config-vlan)#name dev
+sw-gf(config-vlan)#
+sw-gf(config-vlan)#vlan 20
+sw-gf(config-vlan)#name qa
+sw-gf(config-vlan)#
+sw-gf(config-vlan)#vlan 30
+sw-gf(config-vlan)#name it
+sw-gf(config-vlan)#
+sw-gf(config-vlan)#vlan 40
+sw-gf(config-vlan)#name hr
+sw-gf(config-vlan)#
+sw-gf(config-vlan)#
+sw-gf(config-vlan)#
+sw-gf(config-vlan)#interface range Fa0/1-2
+sw-gf(config-if-range)# switchport mode access
+sw-gf(config-if-range)# switchport access vlan 10
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#interface range Fa0/3-4
+sw-gf(config-if-range)# switchport mode access
+sw-gf(config-if-range)# switchport access vlan 20
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#interface range Fa0/5-6
+sw-gf(config-if-range)# switchport mode access
+sw-gf(config-if-range)# switchport access vlan 30
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#interface range Fa0/7-8
+sw-gf(config-if-range)# switchport mode access
+sw-gf(config-if-range)# switchport access vlan 40
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#end
+sw-gf#
+sw-gf#
+sw-gf#sh vlan br
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/9, Fa0/10, Fa0/11, Fa0/12
+                                                Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                Fa0/17, Fa0/18, Fa0/19, Fa0/20
+                                                Fa0/21, Fa0/22, Fa0/23, Fa0/24
+                                                Gig0/1, Gig0/2
+10   dev                              active    Fa0/1, Fa0/2
+20   qa                               active    Fa0/3, Fa0/4
+30   it                               active    Fa0/5, Fa0/6
+40   hr                               active    Fa0/7, Fa0/8
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+sw-gf#
+sw-gf#
+sw-gf#
+sw-gf#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+sw-gf(config)#
+sw-gf(config)#
+sw-gf(config)#
+**************************************************************************************************************************
+Make link between switch - to - switch as trunk and create etherchannel
+**************************************************************************************************************************
+sw-gf(config)#
+sw-gf(config)#int range fa0/21-22
+sw-gf(config-if-range)#switchport mode tr
+sw-gf(config-if-range)#switchport tr NATIVE vlan 99
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#channel-group 1 mode active
+
+sw-gf(config-if-range)#int range fa0/23-24
+sw-gf(config-if-range)#switchport mode tr
+sw-gf(config-if-range)#switchport tr NATIVE vlan 99
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#channel-group 2 mode active
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#do sh int tr
+Port        Mode         Encapsulation  Status        Native vlan
+Po1         on           802.1q         trunking      99
+Po2         on           802.1q         trunking      99
+
+Port        Vlans allowed on trunk
+Po1         1-1005
+Po2         1-1005
+
+Port        Vlans allowed and active in management domain
+Po1         1,10,20,30,40
+Po2         1,10,20,30,40
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Po1         1,10,20,30,40
+Po2         1,10,20,30,40
+
+sw-gf(config-if-range)#do sh etherchannel sum
+Flags:  D - down        P - in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 2
+Number of aggregators:           2
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+----------------------------------------------
+
+1      Po1(SU)           LACP   Fa0/21(P) Fa0/22(P) 
+2      Po2(SU)           LACP   Fa0/23(P) Fa0/24(P) 
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#do wr
+Building configuration...
+[OK]
+sw-gf(config-if-range)#
+**************************************************************************************************************************
+Configure PVST for each vlan here 20 is root
+**************************************************************************************************************************
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#spanning-tree mode pvst
+sw-gf(config)#spanning-tree vlan 20 root primary
+sw-gf(config)#
+sw-gf(config)#
+
+
+
+
+sw3
+
+sw-1f>
+sw-1f>
+sw-1f>en
+sw-1f#
+sw-1f#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+sw-1f(config)#
+**************************************************************************************************************************
+Creating vlans and assigning ports
+**************************************************************************************************************************
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#spanning-tree mode pvst
+sw-gf(config)#spanning-tree vlan 20 root primary
+sw-gf(config)#
+sw-gf(config)#
+sw-1f(config)#vlan 10
+sw-1f(config-vlan)#name dev
+sw-1f(config-vlan)#
+sw-1f(config-vlan)#vlan 20
+sw-1f(config-vlan)#name qa
+sw-1f(config-vlan)#
+sw-1f(config-vlan)#vlan 30 
+sw-1f(config-vlan)#name it
+sw-1f(config-vlan)#
+sw-1f(config-vlan)#vlan 40
+sw-1f(config-vlan)#name hr
+sw-1f(config-vlan)#
+sw-1f(config-vlan)#
+sw-1f(config-vlan)#ex
+sw-1f(config)#int range fa0/1-2
+sw-1f(config-if-range)#switchport mode access
+sw-1f(config-if-range)#switchpor access vlan 10
+sw-1f(config-if-range)#
+sw-1f(config-if-range)#ex
+sw-1f(config)#int range fa0/3-4
+sw-1f(config-if-range)#switchport mode access
+sw-1f(config-if-range)#switchpor access vlan 20
+sw-1f(config-if-range)#
+sw-1f(config-if-range)#ex
+sw-1f(config)#int range fa0/5-6
+sw-1f(config-if-range)#switchport mode access
+sw-1f(config-if-range)#switchpor access vlan 30
+sw-1f(config-if-range)#
+sw-1f(config-if-range)#ex
+sw-1f(config)#int range fa0/7-8
+sw-1f(config-if-range)#switchport mode access
+sw-1f(config-if-range)#switchpor access vlan 40
+sw-1f(config-if-range)#
+sw-1f(config-if-range)#do sh vlan br
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/9, Fa0/10, Fa0/11, Fa0/12
+                                                Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                Fa0/17, Fa0/18, Fa0/19, Fa0/20
+                                                Gig0/1, Gig0/2
+10   dev                              active    Fa0/1, Fa0/2
+20   qa                               active    Fa0/3, Fa0/4
+30   it                               active    Fa0/5, Fa0/6
+40   hr                               active    Fa0/7, Fa0/8
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+sw-1f(config-if-range)#
+sw-1f(config-if-range)#
+**************************************************************************************************************************
+Make link between switch - to - switch as trunk and create etherchannel
+**************************************************************************************************************************
+sw-1f(config)#
+sw-1f(config)#
+sw-1f(config)#int range fa0/21-22
+sw-1f(config-if-range)#switchport mode tr
+sw-1f(config-if-range)#switchport tr NATIVE vlan 99
+sw-1f(config-if-range)#
+sw-1f(config-if-range)#
+sw-1f(config-if-range)#channel-group 1 mode passive
+sw-1f(config-if-range)#
+sw-1f(config-if-range)#
+sw-1f(config-if-range)#int range fa0/23-24
+sw-1f(config-if-range)#switchport mode tr
+sw-1f(config-if-range)#switchport tr NATIVE vlan 99
+sw-1f(config-if-range)#
+sw-1f(config-if-range)#channel-group 3 mode active
+sw-1f(config-if-range)#
+sw-1f(config-if-range)#do sh int tr
+Port        Mode         Encapsulation  Status        Native vlan
+Po1         on           802.1q         trunking      99
+Po3         on           802.1q         trunking      99
+
+Port        Vlans allowed on trunk
+Po1         1-1005
+Po3         1-1005
+
+Port        Vlans allowed and active in management domain
+Po1         1,10,20,30,40
+Po3         1,10,20,30,40
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Po1         1,10,20,30,40
+Po3         1,10,20,30,40
+
+sw-1f(config-if-range)#
+sw-1f(config-if-range)#do sh etherchannel sum
+Flags:  D - down        P - in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 2
+Number of aggregators:           2
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+----------------------------------------------
+
+1      Po1(SU)           LACP   Fa0/21(P) Fa0/22(P) 
+3      Po3(SU)           LACP   Fa0/23(P) Fa0/24(P) 
+sw-1f(config-if-range)#do wr
+Building configuration...
+[OK]
+**************************************************************************************************************************
+Configure PVST for each vlan here 20 is root
+**************************************************************************************************************************
+sw-1f(config-if-range)#
+sw-1f(config-if-range)#spanning-tree mode pvst
+sw-1f(config)#spanning-tree vlan 20 root primary
+sw-1f(config)#
+sw-1f(config)#
+
+
+router
+RTR>
+RTR>en
+RTR#
+RTR#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+RTR(config)#
+**************************************************************************************************************************
+Bring router port up mannualy which connect with switch
+**************************************************************************************************************************
+sw-gf(config-if-range)#
+sw-gf(config-if-range)#spanning-tree mode pvst
+sw-gf(config)#spanning-tree vlan 20 root primary
+sw-gf(config)#
+sw-gf(config)#
+RTR(config)#int gig0/1
+RTR(config-if)#no shut
+RTR(config-if)#
+**************************************************************************************************************************
+Create sub interfaces for each vlan and assign ip (Default gateway)
+**************************************************************************************************************************
+RTR(config-if)#int gig0/1.10
+RTR(config-subif)#encapsulation dot1q 10
+RTR(config-subif)#ip address 192.168.1.62 255.255.255.192
+RTR(config-subif)#
+RTR(config-subif)#
+RTR(config-subif)#int gig0/1.20
+RTR(config-subif)#encapsulation dot1q 20
+RTR(config-subif)#ip address 192.168.1.126 255.255.255.192
+RTR(config-subif)#
+RTR(config-subif)#
+RTR(config-subif)#int gig0/1.30
+RTR(config-subif)#encapsulation dot1q 30
+RTR(config-subif)#ip address 192.168.1.190 255.255.255.192
+RTR(config-subif)#
+RTR(config-subif)#int gig0/1.40
+RTR(config-subif)#encapsulation dot1q 40
+RTR(config-subif)#ip address 192.168.1.254 255.255.255.192
+RTR(config-subif)#
+RTR(config-subif)#do sh ip int br
+Interface              IP-Address      OK? Method Status                Protocol 
+GigabitEthernet0/0     unassigned      YES unset  administratively down down 
+GigabitEthernet0/1     unassigned      YES unset  up                    up 
+GigabitEthernet0/1.10  192.168.1.62    YES manual up                    up 
+GigabitEthernet0/1.20  192.168.1.126   YES manual up                    up 
+GigabitEthernet0/1.30  192.168.1.190   YES manual up                    up 
+GigabitEthernet0/1.40  192.168.1.254   YES manual up                    up 
+GigabitEthernet0/2     unassigned      YES unset  administratively down down 
+Vlan1                  unassigned      YES unset  administratively down down
+RTR(config-subif)#
+
+
