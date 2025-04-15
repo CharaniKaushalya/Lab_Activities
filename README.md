@@ -18,7 +18,6 @@ Here are the activities included in this repository:
 
 
 Each lab folder contains the following:
-- Cisco Packet Tracer file (`.pkt`)
-- Configuration files (if applicable)
-- A detailed description of the tasks performed
+- Cisco Packet Tracer file (.pkt)
+- Configuration files with detailed description of the tasks performed
 
